@@ -1,0 +1,33 @@
+    IMaterial* CreateMaterial(std::string mat_type, std::string base_material, bool ignorez, bool nofog)
+    {
+    	std::stringstream mat_data;
+     
+    	mat_data << "\"" + mat_type + "\"\n"
+    		"{\n"
+    		"\t\"$surfaceprop\" Metal\r\n"
+    		"\t\"$envmap\" \"env_cubemap\"\r\n"
+    		"\t\"$phong\" \"1\"\r\n"
+    		"\t$phongfresnelranges \"[0.5 0.75 1]\"\r\n"
+    		"\t\"$basetexture\" \"" + base_material + "\"\n"
+    		"\t\"$ignorez\" \"" + std::to_string(ignorez) + "\"\n"
+    		"\t\"$nofog\" \"" + std::to_string(nofog) + "\"\n"
+    		"\t\"$model\" \"1\"\n"
+    		"\t\"$nocull\" \"1\"\n"
+    		"\t\"$halflambert\" \"1\"\n"
+    		"\t$phongexponent 25\r\n"
+    		"\t$rimlight 1\r\n"
+    		"\t$rimlightexponent 1\r\n"
+    		"\t$rimlightboost 1\r\n"
+    		"\t$selfillum 1\r\n"
+    		"\t$selfillum_envmapmask_alpha 1\r\n"
+    		"\t$selfillumtint \"[0.61 0.61 0.61]\"\r\n"
+    		"}\n" << std::flush;
+     
+    	std::string matname = "chams_" + created;
+    	KeyValues* kv = new KeyValues(matname.c_str());
+    	InitKeyValues(kv, matname.c_str());
+    	LoadFromBuffer(kv, matname.c_str(), mat_data.str().c_str());
+    	created++;
+     
+    	return g_MaterialSystem->CreateMaterial(matname.c_str(), kv);
+    }
